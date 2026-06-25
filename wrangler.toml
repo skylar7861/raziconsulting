@@ -1,0 +1,6 @@
+name = "raziconsulting"
+main = "src/index.js"
+compatibility_date = "2026-06-25"
+
+[assets]
+directory = "./public"

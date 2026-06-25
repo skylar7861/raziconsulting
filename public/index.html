@@ -3,78 +3,351 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Razi Consulting</title>
+  <title>Razi Consulting Services — Data quality, built on Databricks</title>
+  <meta name="description" content="Razi Consulting Services builds native Databricks data-quality tooling. Our flagship, Data Trust Scanner, catches the silent errors that break reports before they reach your dashboards." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
   <style>
+    :root {
+      --ink: #0B1220;
+      --ink-2: #131D31;
+      --ink-3: #1B2740;
+      --paper: #FFFFFF;
+      --paper-2: #F4F7FB;
+      --line: #E4E9F2;
+      --line-d: rgba(255,255,255,.10);
+      --text: #18222F;
+      --text-d: #E9EEF6;
+      --muted: #5C6678;
+      --muted-d: #93A1B7;
+      --teal: #13B7A4;
+      --teal-deep: #0E978A;
+      --amber: #F5A524;
+      --radius: 16px;
+      --maxw: 1080px;
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: system-ui, -apple-system, sans-serif; line-height: 1.6; color: #333; }
-    header { background: #0a192f; color: #fff; padding: 3rem 1.5rem 4rem; text-align: center; }
-    .logo { margin-bottom: 1.5rem; }
-    .logo svg { width: 80px; height: 80px; }
-    header h1 { font-size: 2.8rem; margin-bottom: 0.5rem; letter-spacing: -1px; }
-    header p { font-size: 1.2rem; opacity: 0.85; max-width: 500px; margin: 0 auto; }
-    section { max-width: 850px; margin: 4rem auto; padding: 0 1.5rem; }
-    h2 { color: #0a192f; margin-bottom: 1rem; font-size: 1.6rem; }
-    .highlight { background: #f0f7ff; border-left: 4px solid #1b4965; padding: 1.5rem; border-radius: 0 8px 8px 0; margin: 1.5rem 0; }
-    .highlight h3 { color: #1b4965; margin-bottom: 0.5rem; }
-    .services { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
-    .card { background: #f8f9fa; padding: 1.5rem; border-radius: 8px; border-top: 3px solid #1b4965; }
-    .card h3 { margin-bottom: 0.5rem; color: #0a192f; }
-    footer { text-align: center; padding: 2.5rem; color: #666; font-size: 0.9rem; border-top: 1px solid #eee; margin-top: 2rem; }
-    a { color: #1b4965; }
-    .badge { display: inline-block; background: #ff3621; color: #fff; font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.6rem; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.75rem; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
+      color: var(--text);
+      background: var(--paper);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+    .eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--teal);
+    }
+    a { color: var(--teal-deep); text-decoration: none; }
+
+    /* ---- Top bar ---- */
+    .topbar { background: var(--ink); }
+    .topbar .wrap {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 76px;
+    }
+    .brand { display: flex; align-items: center; gap: 13px; }
+    .brand .mark { width: 40px; height: 40px; flex: none; }
+    .brand .name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 20px; color: var(--text-d);
+      letter-spacing: -0.4px; line-height: 1;
+    }
+    .brand .sub {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9.5px; letter-spacing: 2.5px; color: var(--muted-d);
+      text-transform: uppercase; margin-top: 3px;
+    }
+    .nav-cta {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 600;
+      font-size: 14px; color: var(--ink); background: var(--teal);
+      padding: 10px 18px; border-radius: 9px; transition: background .15s;
+    }
+    .nav-cta:hover { background: #1AD3BD; }
+
+    /* ---- Hero ---- */
+    .hero { background: var(--ink); color: var(--text-d); padding: 36px 0 92px; position: relative; overflow: hidden; }
+    .hero::after {
+      content: ""; position: absolute; inset: 0;
+      background: radial-gradient(900px 420px at 78% -10%, rgba(19,183,164,.16), transparent 60%);
+      pointer-events: none;
+    }
+    .hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-size: clamp(2.1rem, 4.4vw, 3.25rem); line-height: 1.05;
+      letter-spacing: -1.4px; margin: 18px 0 18px; color: #fff;
+    }
+    .hero h1 .flag { color: var(--teal); }
+    .hero p.lead { font-size: 1.12rem; color: var(--muted-d); max-width: 30em; }
+    .hero .actions { display: flex; gap: 14px; margin-top: 30px; flex-wrap: wrap; }
+    .btn {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 15px;
+      padding: 13px 22px; border-radius: 10px; transition: transform .12s, background .15s, border-color .15s;
+      display: inline-block;
+    }
+    .btn-primary { background: var(--teal); color: var(--ink); }
+    .btn-primary:hover { background: #1AD3BD; transform: translateY(-1px); }
+    .btn-ghost { border: 1px solid var(--line-d); color: var(--text-d); }
+    .btn-ghost:hover { border-color: var(--teal); color: #fff; }
+
+    /* ---- Scan grid signature ---- */
+    .scan {
+      position: relative; background: var(--ink-2);
+      border: 1px solid var(--line-d); border-radius: var(--radius);
+      padding: 18px; overflow: hidden;
+      box-shadow: 0 30px 60px -30px rgba(0,0,0,.7);
+    }
+    .scan-top { display: flex; align-items: center; gap: 7px; margin-bottom: 14px; }
+    .scan-top .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--ink-3); }
+    .scan-top .title {
+      font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 1px;
+      color: var(--muted-d); margin-left: 6px;
+    }
+    table.grid { width: 100%; border-collapse: collapse; font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; }
+    table.grid th {
+      text-align: left; color: var(--muted-d); font-weight: 600; font-size: 10.5px;
+      letter-spacing: 1px; text-transform: uppercase; padding: 6px 10px; border-bottom: 1px solid var(--line-d);
+    }
+    table.grid td { color: #C3CEDE; padding: 9px 10px; border-bottom: 1px solid rgba(255,255,255,.045); white-space: nowrap; }
+    table.grid tr:last-child td { border-bottom: none; }
+    td.flagged { color: var(--amber); position: relative; }
+    .chip {
+      display: inline-block; font-size: 9.5px; letter-spacing: .5px; font-weight: 600;
+      color: var(--amber); border: 1px solid rgba(245,165,36,.45); background: rgba(245,165,36,.10);
+      border-radius: 5px; padding: 1px 6px; margin-left: 8px; vertical-align: middle;
+    }
+    .scanline {
+      position: absolute; left: 0; right: 0; height: 56px; z-index: 2; pointer-events: none;
+      top: 64px;
+      background: linear-gradient(180deg, transparent, rgba(19,183,164,.18) 55%, rgba(19,183,164,.55));
+      border-bottom: 1.5px solid var(--teal);
+      animation: sweep 3.6s cubic-bezier(.5,0,.5,1) infinite;
+    }
+    @keyframes sweep {
+      0% { transform: translateY(0); opacity: 0; }
+      12% { opacity: 1; }
+      88% { opacity: 1; }
+      100% { transform: translateY(190px); opacity: 0; }
+    }
+    .scan-foot {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 14px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted-d);
+    }
+    .scan-foot .ok { color: var(--teal); }
+
+    /* ---- Generic section ---- */
+    .section { padding: 84px 0; }
+    .section h2 {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-size: clamp(1.6rem, 3vw, 2.1rem); letter-spacing: -0.8px; color: var(--ink);
+      margin: 12px 0 16px; line-height: 1.12;
+    }
+    .section .lead { font-size: 1.08rem; color: var(--muted); max-width: 40em; }
+
+    .focus { background: var(--paper-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .focus-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 40px; }
+    .fcard { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 24px; }
+    .fcard .num { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--teal); font-weight: 600; }
+    .fcard h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.18rem; color: var(--ink); margin: 14px 0 8px; letter-spacing: -0.3px; }
+    .fcard p { font-size: .98rem; color: var(--muted); }
+
+    /* ---- Product ---- */
+    .product .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+    .product .badge {
+      display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600;
+      letter-spacing: 1.5px; text-transform: uppercase; color: var(--teal-deep);
+      background: rgba(19,183,164,.10); border: 1px solid rgba(19,183,164,.30);
+      padding: 5px 11px; border-radius: 6px; margin-bottom: 18px;
+    }
+    .product h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(1.7rem, 3vw, 2.3rem); letter-spacing: -1px; color: var(--ink); margin-bottom: 16px; }
+    .product .lead { color: var(--muted); font-size: 1.06rem; }
+    .checks { list-style: none; margin: 26px 0 0; display: grid; gap: 13px; }
+    .checks li { display: flex; gap: 12px; align-items: flex-start; font-size: 1rem; color: var(--text); }
+    .checks .tick {
+      flex: none; width: 22px; height: 22px; border-radius: 6px; background: rgba(19,183,164,.12);
+      color: var(--teal-deep); display: grid; place-items: center; font-size: 13px; font-weight: 700; margin-top: 2px;
+    }
+    .product .panel {
+      background: var(--ink); border-radius: var(--radius); padding: 30px; color: var(--text-d);
+      border: 1px solid var(--ink-3);
+    }
+    .product .panel .row { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--line-d); font-family: 'IBM Plex Mono', monospace; font-size: 13px; }
+    .product .panel .row:last-child { border-bottom: none; }
+    .product .panel .row .label { color: var(--muted-d); }
+    .product .panel .row .val { color: #fff; }
+    .product .panel .row .val.warn { color: var(--amber); }
+    .product .panel .row .val.good { color: var(--teal); }
+
+    /* ---- Contact ---- */
+    .contact { background: var(--ink); color: var(--text-d); text-align: center; padding: 92px 0; }
+    .contact h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(1.7rem, 3.4vw, 2.4rem); color: #fff; letter-spacing: -0.8px; margin-bottom: 14px; }
+    .contact p { color: var(--muted-d); max-width: 32em; margin: 0 auto 30px; font-size: 1.08rem; }
+    .contact .email {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1.15rem;
+      color: var(--ink); background: var(--teal); padding: 14px 26px; border-radius: 11px; display: inline-block;
+      transition: background .15s, transform .12s;
+    }
+    .contact .email:hover { background: #1AD3BD; transform: translateY(-1px); }
+
+    /* ---- Footer ---- */
+    .foot { background: #070C16; color: var(--muted-d); padding: 30px 0; font-size: .86rem; }
+    .foot .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .foot .note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .5px; }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 860px) {
+      .hero .wrap, .product .wrap { grid-template-columns: 1fr; gap: 40px; }
+      .focus-grid { grid-template-columns: 1fr; }
+      .hero { padding-bottom: 64px; }
+      .section { padding: 64px 0; }
+      .brand .sub { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .scanline { animation: none; top: 150px; opacity: .9; }
+    }
+    :focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; border-radius: 4px; }
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo">
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="50" r="46" fill="none" stroke="#ff3621" stroke-width="4"/>
-        <text x="50" y="58" text-anchor="middle" font-size="36" font-weight="bold" fill="#fff" font-family="system-ui, sans-serif">R</text>
-        <path d="M50 8 L50 18 M50 82 L50 92 M8 50 L18 50 M82 50 L92 50" stroke="#ff3621" stroke-width="3" stroke-linecap="round"/>
-      </svg>
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Razi Consulting Services home">
+        <svg class="mark" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="64" height="64" rx="15" fill="#131D31"/>
+          <rect x="17" y="44" width="30" height="3.5" rx="1.75" fill="#13B7A4"/>
+          <text x="32" y="42" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="34" font-weight="700" fill="#F5F7FA">R</text>
+          <circle cx="48" cy="18" r="5.5" fill="#F5A524"/>
+        </svg>
+        <span>
+          <span class="name">Razi</span>
+          <span class="sub">Consulting Services</span>
+        </span>
+      </a>
+      <a class="nav-cta" href="#contact">Get in touch</a>
     </div>
-    <h1>Razi Consulting</h1>
-    <p>Strategy. Data. Growth.</p>
+  </div>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow">Data quality · built on Databricks</span>
+        <h1>The numbers look fine.<br>That's the <span class="flag">problem</span>.</h1>
+        <p class="lead">Most bad reports don't error out — they quietly return the wrong answer. Razi builds native Databricks tooling that catches the silent failures before they reach your dashboards.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#product">Meet Data Trust Scanner</a>
+          <a class="btn btn-ghost" href="#focus">What we do</a>
+        </div>
+      </div>
+
+      <!-- Signature: a live data scan -->
+      <div class="scan" aria-label="Illustration of a data-quality scan flagging issues in a table">
+        <div class="scan-top">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span class="title">scanning · orders ⋈ line_items</span>
+        </div>
+        <div style="position:relative;">
+          <div class="scanline" aria-hidden="true"></div>
+          <table class="grid">
+            <thead>
+              <tr><th>order_id</th><th>rows</th><th>status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>10428</td><td>1</td><td class="ok" style="color:#13B7A4">clean</td></tr>
+              <tr><td class="flagged">10429</td><td class="flagged">4</td><td class="flagged">fan-out<span class="chip">×2 revenue</span></td></tr>
+              <tr><td>10430</td><td>1</td><td style="color:#13B7A4">clean</td></tr>
+              <tr><td class="flagged">10431</td><td class="flagged">—</td><td class="flagged">orphaned<span class="chip">no match</span></td></tr>
+              <tr><td>10432</td><td>1</td><td style="color:#13B7A4">clean</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="scan-foot">
+          <span>5 rows scanned</span>
+          <span><span style="color:var(--amber)">2 issues flagged</span> · <span class="ok">3 clean</span></span>
+        </div>
+      </div>
+    </div>
   </header>
 
-  <section>
-    <h2>About</h2>
-    <p>We help organizations turn data into competitive advantage. From boardroom strategy to production-grade data platforms, we build solutions that scale.</p>
-  </section>
-
-  <section>
-    <h2>Services</h2>
-    <div class="services">
-      <div class="card">
-        <h3>Business Strategy</h3>
-        <p>Market analysis, competitive positioning, and long-term growth planning.</p>
-      </div>
-      <div class="card">
-        <h3>Operations</h3>
-        <p>Process optimization and efficiency at scale.</p>
-      </div>
-      <div class="card">
-        <h3>Digital Transformation</h3>
-        <p>Technology advisory and system modernization.</p>
+  <!-- Focus -->
+  <section class="section focus" id="focus">
+    <div class="wrap">
+      <span class="eyebrow">What we do</span>
+      <h2>A data specialist, not a generalist.</h2>
+      <p class="lead">Razi Consulting Services builds data-quality and reporting tooling that runs natively inside your own Databricks environment — governed by your Unity Catalog, with your data never leaving its boundary.</p>
+      <div class="focus-grid">
+        <div class="fcard">
+          <span class="num">01</span>
+          <h3>Catch silent errors</h3>
+          <p>Fan-out joins, duplicate keys, orphaned records, and stale tables — the failures that don't throw an error but quietly corrupt the result.</p>
+        </div>
+        <div class="fcard">
+          <span class="num">02</span>
+          <h3>Explain in plain language</h3>
+          <p>Every finding comes with what it means and how to fix it — written for the analyst and the stakeholder, not just the engineer.</p>
+        </div>
+        <div class="fcard">
+          <span class="num">03</span>
+          <h3>Run where your data lives</h3>
+          <p>Delivered as a Databricks App, so there's no data movement, no new vendor to onboard, and nothing leaves your governance perimeter.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section>
-    <div class="highlight">
-      <span class="badge">Coming Soon</span>
-      <h3>Databricks App Development</h3>
-      <p>We're building custom applications for the Databricks ecosystem — enabling clients to package, publish, and sell their data products directly in the Databricks Marketplace.</p>
+  <!-- Product -->
+  <section class="section product" id="product">
+    <div class="wrap">
+      <div>
+        <span class="badge">Flagship · in development</span>
+        <h2>Data Trust Scanner</h2>
+        <p class="lead">Point it at your tables. It profiles them automatically — no test-writing, no configuration — and surfaces the data-quality problems that silently make reports wrong, each with a plain-English explanation and a recommended fix.</p>
+        <ul class="checks">
+          <li><span class="tick">✓</span><span>Zero-configuration auto-profiling across your schema</span></li>
+          <li><span class="tick">✓</span><span>Join integrity: fan-out, duplicate keys, orphaned rows</span></li>
+          <li><span class="tick">✓</span><span>Freshness, completeness, and consistency checks</span></li>
+          <li><span class="tick">✓</span><span>Business-facing narrative, not just technical pass/fail</span></li>
+        </ul>
+      </div>
+      <div class="panel" aria-label="Sample scan summary">
+        <div class="row"><span class="label">tables_profiled</span><span class="val">14</span></div>
+        <div class="row"><span class="label">join_integrity</span><span class="val warn">2 fan-out risks</span></div>
+        <div class="row"><span class="label">duplicate_keys</span><span class="val warn">1 found</span></div>
+        <div class="row"><span class="label">freshness</span><span class="val good">all current</span></div>
+        <div class="row"><span class="label">narrative_report</span><span class="val good">ready</span></div>
+        <div class="row"><span class="label">data_movement</span><span class="val good">none</span></div>
+      </div>
     </div>
   </section>
 
-  <section>
-    <h2>Contact</h2>
-    <p>Email: <a href="mailto:connect@raziconsulting.com">connect@raziconsulting.com</a></p>
+  <!-- Contact -->
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <span class="eyebrow">Get in touch</span>
+      <h2>Trust your reports again.</h2>
+      <p>Building on Databricks and want early access to Data Trust Scanner, or to compare notes on data quality? I'd like to hear from you.</p>
+      <a class="email" href="mailto:connect@raziconsulting.com">connect@raziconsulting.com</a>
+    </div>
   </section>
 
-  <footer>
-    &copy; 2026 Razi Consulting. All rights reserved.
+  <!-- Footer -->
+  <footer class="foot">
+    <div class="wrap">
+      <span>© 2026 Razi Consulting Services LLC</span>
+      <span class="note">BUILDING ON THE DATABRICKS PLATFORM</span>
+    </div>
   </footer>
+
 </body>
 </html>

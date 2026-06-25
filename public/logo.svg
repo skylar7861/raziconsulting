@@ -1,0 +1,13 @@
+<svg width="300" height="64" viewBox="0 0 300 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Razi Consulting Services">
+  <!-- Mark: a data cell (tile) being scanned, with a status flag -->
+  <rect x="2" y="4" width="56" height="56" rx="14" fill="#0B1220"/>
+  <!-- scan baseline -->
+  <rect x="16" y="42" width="28" height="3" rx="1.5" fill="#13B7A4"/>
+  <!-- monogram -->
+  <text x="30" y="40" text-anchor="middle" font-family="'Space Grotesk', system-ui, sans-serif" font-size="32" font-weight="700" fill="#F5F7FA">R</text>
+  <!-- status flag -->
+  <circle cx="45" cy="17" r="5" fill="#F5A524"/>
+  <!-- Wordmark -->
+  <text x="74" y="33" font-family="'Space Grotesk', system-ui, sans-serif" font-size="29" font-weight="700" letter-spacing="-0.5" fill="#0B1220">Razi</text>
+  <text x="75" y="50" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="10" font-weight="600" letter-spacing="3.2" fill="#5B6678">CONSULTING SERVICES</text>
+</svg>
